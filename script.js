@@ -67,13 +67,21 @@ function login() {
   a.style.color = "#fff";
   b.style.color = "#000";
 }
-if (username === "admin" && password === "admin") {
-  // Redirect to the desired page
-  window.location.href = "dashboard.html"; // Replace with your target page
-} else {
-  // Display error message
-  document.getElementById("errorMessage").style.display = "block";
-};
+
+function login() {
+  // Get input values
+  const username = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  // Check credentials
+  if (username === "admin" && password === "admin") {
+      // Redirect to the desired page
+      window.location.href = "finalprofile.html"; 
+  } else {
+      // Display error message
+      document.getElementById("errorMessage").style.display = "block";
+  }
+}
 
 // CheckBox Function
 function goFurther() {
