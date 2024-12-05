@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Website</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Video Section */
+        .video-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f7fa;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Notes Section */
+        .notes-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background: #ffffff;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .toolbar button {
+            background: #6a11cb;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            margin-right: 5px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .toolbar button:hover {
+            background: #2575fc;
+            transform: scale(1.05);
+        }
+
+        .notes-editor {
+            flex: 1;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.6;
+            background: #f9f9f9;
+            overflow-y: auto;
+            transition: border-color 0.3s ease;
+        }
+
+        .notes-editor:focus {
+            outline: none;
+            border-color: #6a11cb;
+        }
+
+        /* Scrollbar Styles */
+        .notes-editor::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .notes-editor::-webkit-scrollbar-thumb {
+            background: #6a11cb;
+            border-radius: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .video-container,
+            .notes-container {
+                width: 100%;
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Part: Video -->
+        <div class="video-container">
+            <iframe 
+                id="course-video" 
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                allowfullscreen 
+                title="Course Video">
+            </iframe>
+        </div>
+
+        <!-- Right Part: Notes -->
+        <div class="notes-container">
+            <div class="toolbar">
+                <button onclick="execCommand('bold')">B</button>
+                <button onclick="execCommand('italic')">I</button>
+                <button onclick="execCommand('underline')">U</button>
+                <button onclick="highlightText()">Highlight</button>
+                <button onclick="downloadNotes()">Download</button>
+            </div>
+            <div 
+                id="notes-editor" 
+                contenteditable="true" 
+                class="notes-editor">
+                Start taking notes here...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Execute formatting commands
+        function execCommand(command) {
+            document.execCommand(command, false, null);
+        }
+
+        // Highlight selected text
+        function highlightText() {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                const span = document.createElement('span');
+                span.style.backgroundColor = 'yellow';
+                range.surroundContents(span);
+            }
+        }
+
+        // Download notes as a file
+        function downloadNotes() {
+            const notesContent = document.getElementById('notes-editor').innerHTML;
+            const blob = new Blob([notesContent], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'notes.html';
+            link.click();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="/profile.css">
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="images/logo.png" alt="Logo">
+      </div>
+      <ul>
+        <li><a class="active" href="">Home</a></li>
+        <li><a href="#explore">Explore</a></li>
+        <li><a href="#services_section">Services</a></li>
+        <li><a href="#pathway_section">Pathway</a></li>
+        <li><a href="#team_section">Team</a></li>
+        <li><a href="#contactus_section">Contact</a></li>
+    </ul>
+    </nav>
+  </header>
+
+  <!-- Profile Section -->
+  <section id="profile_section">
+    <div class="profile-container">
+      <!-- User Avatar and Info -->
+      <div class="user-info">
+        <img src="images/user-avatar.jpg" alt="User Avatar" class="avatar">
+        <h2 class="user-name" id="user-name">John Doe</h2>
+        <p class="user-title" id="user-title">Progress Title: Beginner</p>
+      </div>
+
+      <!-- Progress Section -->
+      <div class="progress-container">
+        <h3>Your Progress</h3>
+        <div class="progress-bar">
+          <span class="progress-text">Current Progress:</span>
+          <div class="progress" id="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 50%;"></div>
+          </div>
+          <span class="progress-percentage" id="progress-percentage">50%</span>
+        </div>
+      </div>
+
+      <!-- Recent Achievements Section -->
+      <div class="achievements-container">
+        <h3>Recent Achievements</h3>
+        <ul id="achievements-list">
+          <li>Completed Task 1: Beginner Level</li>
+          <li>Achieved Milestone 2: Intermediate</li>
+          <li>Completed Challenge: Expert Level</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2024 Skill Crafter. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  
+  <script>
+  
+    fetch('/api/getUserProfileData')  
+      .then(response => response.json())
+      .then(data => {
+       
+        document.getElementById('user-name').innerText = data.name;
+        document.getElementById('user-title').innerText = `Progress Title: ${data.title}`;
+        document.getElementById('progress-bar').style.width = `${data.progress}%`;
+        document.getElementById('progress-percentage').innerText = `${data.progress}%`;
+
+       
+        const achievementsList = document.getElementById('achievements-list');
+        data.achievements.forEach(achievement => {
+          const listItem = document.createElement('li');
+          listItem.innerText = achievement;
+          achievementsList.appendChild(listItem);
+        });
+      })
+      .catch(error => console.error('Error fetching profile data:', error));
+  </script>
+
+</body>
+</html>
