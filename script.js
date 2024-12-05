@@ -1,4 +1,4 @@
-// Changing the style of scroll bar
+// change style of scroll bar
 // window.onscroll = function() {myFunction()};
 
 // function myFunction() {
@@ -67,6 +67,13 @@ function login() {
   a.style.color = "#fff";
   b.style.color = "#000";
 }
+if (username === "admin" && password === "admin") {
+  // Redirect to the desired page
+  window.location.href = "dashboard.html"; // Replace with your target page
+} else {
+  // Display error message
+  document.getElementById("errorMessage").style.display = "block";
+};
 
 // CheckBox Function
 function goFurther() {
